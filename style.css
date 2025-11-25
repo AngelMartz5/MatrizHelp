@@ -4,11 +4,16 @@
     --accent: #ffc107;
     --danger: #dc3545;
     --success: #28a745;
-    --back-color: #495057; /* Color para el botón volver */
+    --back-color: #495057;
     --highlight: #cce5ff;
-    --bg: #f8f9fa;
+    --bg: #f4f6f9;
     --card-bg: #ffffff;
     --text: #212529;
+    --shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+* {
+    box-sizing: border-box; /* Fundamental para que no se rompa */
 }
 
 body {
@@ -17,104 +22,268 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 30px;
+    padding: 20px;
+    margin: 0;
     color: var(--text);
-    scroll-behavior: smooth;
+    min-height: 100vh;
 }
 
-h1, h2, h3 { color: var(--text); text-align: center; margin-bottom: 15px;}
-h1 { color: var(--primary); }
+h1 { color: var(--primary); margin-top: 10px; font-size: 1.8rem; text-align: center; width: 100%;}
+h2, h3 { color: var(--text); text-align: center; margin-bottom: 15px; width: 100%;}
 
-/* --- NUEVO: BARRA DE NAVEGACIÓN --- */
+/* --- BARRA DE NAVEGACIÓN --- */
 .nav-bar {
     width: 100%;
-    max-width: 800px;
+    max-width: 900px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     background: #e2e6ea;
-    padding: 10px 20px;
+    padding: 12px 20px;
     border-radius: 8px;
-    box-sizing: border-box;
+    box-shadow: var(--shadow);
 }
 
 .back-btn {
     background-color: var(--back-color);
     color: white;
     border: none;
-    padding: 8px 20px;
+    padding: 8px 16px;
     border-radius: 6px;
     cursor: pointer;
     font-weight: 600;
-    font-size: 0.95rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.back-btn:hover { background-color: #343a40; }
-
-.level-tag {
-    font-weight: bold;
-    color: #555;
     font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    white-space: nowrap; /* Evita que el texto del botón se parta */
+}
+.level-tag { font-weight: bold; color: #555; font-size: 0.9rem; white-space: nowrap; }
+
+/* --- CONTROLES --- */
+.controls {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos bajen si no caben */
+    gap: 20px;
+    align-items: flex-end;
+    margin-bottom: 25px;
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    justify-content: center;
 }
 
-/* Controles */
-.controls { display: flex; gap: 20px; align-items: flex-end; margin-bottom: 25px; background: var(--card-bg); padding: 20px 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-.control-group { display: flex; flex-direction: column; gap: 5px; }
+.control-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.control-group { display: flex; flex-direction: column; gap: 8px; }
 label { font-weight: 600; font-size: 0.9rem; color: #555; }
-input[type="number"], select { padding: 10px; border: 2px solid #dee2e6; border-radius: 6px; min-width: 80px; text-align: center; font-size: 1rem; }
-button { background-color: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+input[type="number"], select { 
+    padding: 10px; 
+    border: 2px solid #dee2e6; 
+    border-radius: 6px; 
+    min-width: 80px; 
+    text-align: center; 
+    font-size: 1rem; 
+    background: #fff;
+}
+
+/* Botones Generales */
+button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    font-size: 1rem;
+    white-space: nowrap;
+}
 button:hover { background-color: #004494; transform: translateY(-1px); }
-.action-btn { background-color: var(--success); font-size: 1.1rem; padding: 15px 40px; margin-top: 10px;}
+
+.action-btn { 
+    background-color: var(--success); 
+    font-size: 1.1rem; 
+    padding: 15px 40px; 
+    margin-top: 10px; 
+    width: 100%; 
+    max-width: 500px;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
 .action-btn:hover { background-color: #218838; }
 
-/* Toast */
-.toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 100; top: 30px; font-size: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.5s, top 0.5s; }
-.toast.show { visibility: visible; opacity: 1; top: 50px; }
+/* --- MATRIZ PRINCIPAL (RESPONSIVE) --- */
+.matrix-wrapper {
+    width: 100%;
+    max-width: 1000px; /* Limita el ancho en pantallas gigantes */
+    overflow-x: auto; /* SCROLL HORIZONTAL AUTOMÁTICO */
+    padding: 10px;
+    margin-bottom: 25px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    /* Borde sutil para indicar contenedor */
+    border: 1px solid #eee;
+}
 
-/* Matriz Principal */
-#matrix-container { display: grid; gap: 8px; padding: 25px; background: var(--card-bg); border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); margin-bottom: 20px; }
-input.active-row { background-color: var(--highlight) !important; border-color: var(--primary) !important; font-weight: bold; transform: scale(1.05); z-index: 2; }
+#matrix-container {
+    display: grid;
+    gap: 8px;
+    padding: 15px;
+    /* Truco clave: ajusta el ancho al contenido para que el scroll funcione bien */
+    width: max-content; 
+    margin: 0 auto; /* Centrar si es más pequeño que la pantalla */
+}
+
+/* Inputs de la matriz */
+#matrix-container input {
+    width: 60px;       /* Ancho base */
+    height: 45px;      /* Altura cómoda para dedo */
+    font-size: 1.1rem;
+    text-align: center;
+    /* Asegura que no se encojan */
+    flex-shrink: 0; 
+}
+
+input.active-row { background-color: var(--highlight) !important; border-color: var(--primary) !important; font-weight: bold; transform: scale(1.05); z-index: 5; }
 input.active-row.is-zero { background-color: #f8d7da !important; border-color: var(--danger) !important; color: var(--danger); }
 
-/* Fórmulas */
-.formula-container { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin: 20px 0; width: 100%; max-width: 1000px; }
-.formula-display { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; font-family: 'Courier New', Courier, monospace; font-size: 1.1rem; align-items: center; }
-.formula-term { background: #f1f3f5; padding: 10px 15px; border-radius: 8px; border: 1px solid #ddd; display: flex; align-items: center; gap: 8px; }
-.formula-term.term-zero { background: #fff5f5; border: 1px dashed var(--danger); color: var(--danger); opacity: 0.7; }
-.multiplier { font-weight: bold; font-size: 1.2rem; color: var(--primary); }
+/* --- FÓRMULAS --- */
+.formula-container { 
+    background: white; 
+    padding: 20px; 
+    border-radius: 12px; 
+    box-shadow: var(--shadow); 
+    margin: 20px auto; 
+    width: 100%; 
+    max-width: 1000px; 
+}
+.formula-display { 
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 10px; 
+    font-family: 'Courier New', monospace; 
+    font-size: 1rem; 
+    line-height: 1.6;
+}
+.formula-term { 
+    background: #f8f9fa; 
+    padding: 8px 12px; 
+    border-radius: 6px; 
+    border: 1px solid #dee2e6; 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 5px; 
+    white-space: nowrap; /* No romper términos a la mitad */
+}
+.formula-term.term-zero { background: #fff5f5; border-color: #f5c6cb; color: var(--danger); opacity: 0.8; }
+.multiplier { font-weight: bold; color: var(--primary); }
 .term-zero .multiplier { color: var(--danger); }
-.math-sign { font-weight: bold; color: #555; }
 
-/* Resultados Grid */
+/* --- RESULTADOS GRID INTELIGENTE --- */
+.results-grid {
+    display: grid;
+    /* Esto es magia: llena columnas automáticamente pero nunca las hace más pequeñas de 300px */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 20px;
+}
+
+.main-result { font-size: 1.4rem; font-weight: 700; color: var(--primary); text-align: center; padding: 15px; background: #d1ecf1; border-radius: 8px; border: 1px solid #bee5eb; width: 100%;}
 .divider { width: 100%; border: 0; border-top: 1px solid #ccc; margin: 30px 0; }
-.results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; width: 100%; max-width: 1200px; }
-.main-result { font-size: 1.8rem; font-weight: 700; color: var(--primary); text-align: center; padding: 10px; }
 
-/* Tarjetas */
-.minor-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; border: 1px solid transparent; }
-.minor-card.zero-impact { border: 2px dashed var(--danger); opacity: 0.6; }
+/* --- TARJETAS --- */
+.minor-card { 
+    background: white; 
+    border-radius: 12px; 
+    overflow: hidden; 
+    box-shadow: var(--shadow); 
+    display: flex; 
+    flex-direction: column; 
+    height: 100%; /* Para que todas tengan misma altura en la fila */
+}
+.minor-card.zero-impact { border: 2px dashed #f5c6cb; }
+.minor-card-header { background: var(--primary); color: white; padding: 12px; text-align: center; font-size: 1rem; }
 .minor-card.zero-impact .minor-card-header { background: #dc3545; }
-.minor-card-header { background: var(--primary); color: white; padding: 12px; text-align: center; }
-.minor-card-body { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; align-items: center; }
-.matrix-display { display: grid; gap: 4px; margin: 10px 0; background: #e9ecef; padding: 8px; border-radius: 6px; }
-.matrix-cell { background: white; padding: 5px; text-align: center; min-width: 30px; border-radius: 3px; font-weight: 500; }
-.result-det { font-weight: 700; color: var(--text); background: var(--secondary); padding: 8px 15px; border-radius: 20px; margin-top: 10px; }
+.minor-card-body { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
 
-/* Botones Footer */
-.card-footer { padding: 12px; text-align: center; background: #f8f9fa; border-top: 1px solid #eee; display: flex; flex-direction: column; gap: 8px;}
-.promote-btn { background-color: var(--success); color: white; font-size: 0.9rem; padding: 8px 16px; border-radius: 20px; border: none; cursor: pointer; transition: background 0.3s; width: 100%; }
-.promote-btn:hover { background-color: #218838; }
-.toggle-btn { background-color: var(--primary); color: white; font-size: 0.9rem; padding: 8px 16px; border-radius: 20px; border: none; cursor: pointer; transition: background 0.3s; width: 100%; }
-.toggle-btn:hover { background-color: #004494; }
-.toggle-btn.active { background-color: #6c757d; }
+.matrix-display { display: grid; gap: 4px; margin: 10px 0; background: #e9ecef; padding: 8px; border-radius: 6px; width: max-content;}
+.matrix-cell { background: white; padding: 5px; text-align: center; min-width: 35px; font-size: 0.95rem; border-radius: 3px;}
+.result-det { font-weight: 700; background: var(--secondary); padding: 8px 16px; border-radius: 20px; margin-top: auto; /* Empuja al fondo */ margin-bottom: 10px; font-size: 0.95rem; }
 
-/* Anidados */
-.nested-container { display: none; background: #f1f3f5; padding: 15px; border-top: 3px solid var(--primary); max-height: 500px; overflow-y: auto;}
-.sub-minor-card { background: white; border-radius: 8px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 4px solid var(--accent); }
-.secondary-toggle { background-color: var(--accent); color: #212529; font-size: 0.8rem; padding: 5px 12px; margin-top: 10px; width: auto; display: inline-block;}
-.sub-formula-container { margin-top: 12px; padding: 12px; background: #fff8e1; border-radius: 6px; font-family: 'Courier New', monospace; font-size: 0.95rem; border: 1px solid #ffeeba; color: #856404; }
+.card-footer { padding: 12px; background: #f8f9fa; border-top: 1px solid #eee; display: flex; flex-direction: column; gap: 10px; }
+.promote-btn, .toggle-btn { width: 100%; font-size: 0.9rem; padding: 10px; }
+
+/* --- TOAST --- */
+.toast { visibility: hidden; min-width: 280px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 999; top: 20px; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.4s, top 0.4s; width: 90%; max-width: 400px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+.toast.show { visibility: visible; opacity: 1; top: 40px; }
+
+/* =======================================================
+   MEDIA QUERIES (RESPONSIVE)
+   ======================================================= */
+
+/* TABLETS Y LAPTOPS PEQUEÑAS (768px - 1024px) */
+@media (max-width: 1024px) {
+    body { padding: 15px; }
+    
+    .results-grid {
+        /* En tablet forzamos máximo 2 columnas para que no se vean apretadas */
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    }
+    
+    .matrix-wrapper {
+        /* Aseguramos que la sombra no se corte */
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+/* MOVILES (< 768px) */
+@media (max-width: 768px) {
+    body { padding: 10px; }
+    
+    h1 { font-size: 1.5rem; }
+    
+    .nav-bar {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+    .back-btn { width: 100%; justify-content: center; }
+
+    .controls {
+        padding: 15px;
+        gap: 15px;
+    }
+    
+    .control-row {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .control-group { flex: 1; }
+    .control-group input, .control-group select { width: 100%; }
+    
+    #btn-generate { width: 100%; }
+
+    /* Forzar 1 sola columna en tarjetas para móvil */
+    .results-grid {
+        grid-template-columns: 1fr; 
+    }
+    
+    .formula-display { font-size: 0.85rem; }
+    
+    /* inputs un poco más pequeños en móvil pero scrolleables */
+    #matrix-container input { width: 50px; height: 40px; font-size: 1rem; }
+}

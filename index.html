@@ -2,38 +2,41 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Laplace con Navegación</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Calculadora Laplace Responsive</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>Analizador de Determinantes (Laplace)</h1>
+    <h1>Analizador de Determinantes</h1>
 
     <div id="nav-bar" class="nav-bar" style="display: none;">
-        <button id="btn-back" class="back-btn">⬅ Volver a la Matriz Anterior</button>
-        <span id="level-indicator" class="level-tag">Nivel de Profundidad: 1</span>
+        <button id="btn-back" class="back-btn">⬅ Volver a Matriz Anterior</button>
+        <span id="level-indicator" class="level-tag">Nivel: 1</span>
     </div>
 
     <div class="controls">
-        <div class="control-group">
-            <label>Tamaño (N x N): </label>
-            <input type="number" id="size" value="7" min="2" max="10">
-        </div>
-        
-        <div class="control-group">
-            <label>Usar Fila para Expansión Principal:</label>
-            <select id="row-select">
-                </select>
+        <div class="control-row">
+            <div class="control-group">
+                <label>Tamaño:</label>
+                <input type="number" id="size" value="7" min="2" max="10">
+            </div>
+            
+            <div class="control-group">
+                <label>Fila Expansión:</label>
+                <select id="row-select">
+                    </select>
+            </div>
         </div>
 
-        <button id="btn-generate">Reiniciar / Borrar</button>
+        <button id="btn-generate">Reiniciar</button>
     </div>
 
     <div id="toast-message" class="toast">¡Matriz cargada!</div>
 
-    <div id="matrix-container">
-        </div>
+    <div class="matrix-wrapper">
+        <div id="matrix-container">
+            </div>
+    </div>
 
     <button id="btn-calc" class="action-btn">Calcular Determinante</button>
 
@@ -42,14 +45,14 @@
         <div id="main-det" class="main-result"></div>
 
         <div class="formula-container">
-            <h3>Desarrollo por Cofactores (Matriz Madre)</h3>
+            <h3>Desarrollo (Matriz Madre)</h3>
             <div id="formula-display" class="formula-display"></div>
-            <p class="formula-note">Nota: Los términos en <span style="color:var(--danger); font-weight:bold;">rojo</span> son ceros, por lo que anulan su submatriz.</p>
+            <p class="formula-note">Nota: Los <span style="color:var(--danger); font-weight:bold;">rojos</span> son ceros (se anulan).</p>
         </div>
 
         <hr class="divider">
         
-        <h2>Matrices Menores Involucradas (Nivel 1)</h2>
+        <h2>Matrices Menores (Nivel Actual)</h2>
         <div id="results" class="results-grid"></div>
     </div>
 
