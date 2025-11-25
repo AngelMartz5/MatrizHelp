@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Laplace con Navegación</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Analizador de Determinantes (Laplace)</h1>
+
+    <div id="nav-bar" class="nav-bar" style="display: none;">
+        <button id="btn-back" class="back-btn">⬅ Volver a la Matriz Anterior</button>
+        <span id="level-indicator" class="level-tag">Nivel de Profundidad: 1</span>
+    </div>
+
+    <div class="controls">
+        <div class="control-group">
+            <label>Tamaño (N x N): </label>
+            <input type="number" id="size" value="7" min="2" max="10">
+        </div>
+        
+        <div class="control-group">
+            <label>Usar Fila para Expansión Principal:</label>
+            <select id="row-select">
+                </select>
+        </div>
+
+        <button id="btn-generate">Reiniciar / Borrar</button>
+    </div>
+
+    <div id="toast-message" class="toast">¡Matriz cargada!</div>
+
+    <div id="matrix-container">
+        </div>
+
+    <button id="btn-calc" class="action-btn">Calcular Determinante</button>
+
+    <div id="results-area" style="display: none;">
+        
+        <div id="main-det" class="main-result"></div>
+
+        <div class="formula-container">
+            <h3>Desarrollo por Cofactores (Matriz Madre)</h3>
+            <div id="formula-display" class="formula-display"></div>
+            <p class="formula-note">Nota: Los términos en <span style="color:var(--danger); font-weight:bold;">rojo</span> son ceros, por lo que anulan su submatriz.</p>
+        </div>
+
+        <hr class="divider">
+        
+        <h2>Matrices Menores Involucradas (Nivel 1)</h2>
+        <div id="results" class="results-grid"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
