@@ -2,58 +2,66 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Calculadora Laplace Responsive</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solucionador Examen Álgebra Lineal 2025</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>Analizador de Determinantes</h1>
+    <h1>Solucionador de Examen: Álgebra Lineal</h1>
 
-    <div id="nav-bar" class="nav-bar" style="display: none;">
-        <button id="btn-back" class="back-btn">⬅ Volver a Matriz Anterior</button>
-        <span id="level-indicator" class="level-tag">Nivel: 1</span>
+    <div class="tabs-container">
+        <button class="tab-btn active" onclick="switchTab('tab-explorer')">1. Explorador Matriz A</button>
+        <button class="tab-btn" onclick="switchTab('tab-steps')">2. Procedimientos (Gauss)</button>
+        <button class="tab-btn" onclick="switchTab('tab-exam')">3. Resolver Examen Completo</button>
     </div>
 
-    <div class="controls">
-        <div class="control-row">
-            <div class="control-group">
-                <label>Tamaño:</label>
-                <input type="number" id="size" value="7" min="2" max="10">
-            </div>
-            
-            <div class="control-group">
-                <label>Fila Expansión:</label>
-                <select id="row-select">
-                    </select>
-            </div>
+    <div id="tab-explorer" class="tab-content active-content">
+        <div id="nav-bar" class="nav-bar" style="display: none;">
+            <button id="btn-back" class="back-btn">⬅ Volver Atrás</button>
+            <span id="level-indicator" class="level-tag">Nivel: 1</span>
         </div>
-
-        <button id="btn-generate">Reiniciar</button>
-    </div>
-
-    <div id="toast-message" class="toast">¡Matriz cargada!</div>
-
-    <div class="matrix-wrapper">
-        <div id="matrix-container">
+        <div class="controls">
+            <div class="control-row">
+                <div class="control-group"><label>Tamaño Matriz</label><input type="number" id="size" value="7" min="2" max="10"></div>
+                <div class="control-group"><label>Fila Pivote</label><select id="row-select"></select></div>
             </div>
+            <div class="control-row"><button id="btn-reset-default" class="btn-secondary">Cargar Datos del Examen</button></div>
+        </div>
+        <div id="toast-message" class="toast">Notificación</div>
+        <div class="matrix-wrapper"><div id="matrix-container"></div></div>
+        <div id="explorer-results" style="display: none; width: 100%; flex-direction: column; align-items: center;">
+            <div id="main-det" style="font-size: 1.5rem; font-weight: 800; color: var(--primary); margin: 20px 0;"></div>
+            <div class="formula-container"><h3 style="text-align:left; margin-left:10px; font-size:0.9rem; color:var(--text-light);">Desarrollo por Cofactores</h3><div id="formula-display" class="formula-display"></div></div>
+            <div style="width:100%; max-width:1200px; border-top:2px dashed #e5e7eb; margin:30px 0;"></div>
+            <h2>Desglose de Submatrices</h2>
+            <div id="results" class="results-grid"></div>
+        </div>
     </div>
 
-    <button id="btn-calc" class="action-btn">Calcular Determinante</button>
-
-    <div id="results-area" style="display: none;">
-        
-        <div id="main-det" class="main-result"></div>
-
-        <div class="formula-container">
-            <h3>Desarrollo (Matriz Madre)</h3>
-            <div id="formula-display" class="formula-display"></div>
-            <p class="formula-note">Nota: Los <span style="color:var(--danger); font-weight:bold;">rojos</span> son ceros (se anulan).</p>
+    <div id="tab-steps" class="tab-content">
+        <div class="controls" style="text-align: center; max-width: 800px;">
+            <h3>Generador de Procedimientos</h3>
+            <p style="color: var(--text-light); margin-bottom: 15px;">Selecciona qué punto del examen quieres resolver:</p>
+            <div class="control-row" style="align-items: center; gap: 10px; margin-bottom: 10px;">
+                <label style="min-width: 100px;">Elegir Inciso:</label>
+                <select id="method-select" style="max-width: 400px; font-weight: bold; color: var(--primary-dark);">
+                    <option value="item3">Inciso 3: Determinante (Método Gauss)</option>
+                    <option value="item6">Inciso 6: Inversa (Gauss-Jordan [A|I])</option>
+                </select>
+            </div>
+            <button class="action-btn" onclick="runSelectedMethod()">Generar Pasos (Fracciones)</button>
         </div>
+        <div id="gauss-steps-container" style="width: 100%; display: flex; flex-direction: column; align-items: center;"></div>
+    </div>
 
-        <hr class="divider">
-        
-        <h2>Matrices Menores (Nivel Actual)</h2>
-        <div id="results" class="results-grid"></div>
+    <div id="tab-exam" class="tab-content">
+        <div class="controls">
+            <h3>Informe Completo del Examen</h3>
+            <p style="text-align: center; color: var(--text-light); margin-bottom: 15px;">Genera la respuesta para los puntos 1 al 8.</p>
+            <button class="action-btn" onclick="calculateFullExam()">GENERAR RESPUESTAS ESTRATEGICAS</button>
+        </div>
+        <div id="exam-results-container" class="results-grid" style="margin-top: 20px;"></div>
     </div>
 
     <script src="script.js"></script>
